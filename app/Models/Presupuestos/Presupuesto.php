@@ -10,6 +10,8 @@ class Presupuesto extends Model
 
     protected $primaryKey = 'id_presup';
 
+    public $timestamps = false;
+    
     protected $fillable = [
         "id_empresa",
         "id_grupo",

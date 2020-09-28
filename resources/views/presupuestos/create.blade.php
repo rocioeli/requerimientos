@@ -126,23 +126,6 @@
     <script src="{{ asset('assets/datatables/JSZip-2.5.0/jszip.min.js') }}"></script>
 
     <script src="{{('/js/presupuestos/titulos.js')}}"></script>
-    <script>
-    $(document).ready(function () {
-        $('#listaPresupuestos').DataTable({
-            // 'dom': 'lBfrtip',
-            'language' : idioma,
-            'destroy' : true,
-        });
+    <script src="{{('/js/presupuestos/presupuesto.js')}}"></script>
 
-        $('#listaPresupuestos tbody tr').on('click', function(){
-        $('[name=id_presup]').val($(this).attr('value'));
-        $('[name=codigo]').text($(this).find('td')[0].innerText);
-        $('[name=descripcion]').text($(this).find('td')[1].innerText);
-        $('[name=name_grupo]').text($(this).find('td')[2].innerText);
-        $('[name=fecha_emision]').text($(this).find('td')[3].innerText);
-        $('[name=name_moneda]').text($(this).find('td')[4].innerText);
-        $('#presupuestosModal').modal('hide');
-    });
-    });
-    </script>
 @endsection

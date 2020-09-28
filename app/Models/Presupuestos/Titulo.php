@@ -10,6 +10,8 @@ class Titulo extends Model
 
     protected $primaryKey = 'id_titulo';
 
+    public $timestamps = false;
+    
     protected $fillable = [
         "id_presup",
         "codigo",

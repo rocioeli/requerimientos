@@ -30,10 +30,10 @@ class PresupuestoController extends Controller
         return view('presupuestos.create', compact('presupuesto','grupos','monedas','presupuestos'));
     }
 
-    public function mostrarPresupuesto(Presupuesto $presupuesto)
+    public function mostrarPartidas($id)
     {
-        $titulos = $presupuesto->titulos;
-        $partidas = $presupuesto->partidas;
+        $titulos = Presupuesto::find($id)->titulos;
+        $partidas = Presupuesto::find($id)->partidas;
 
         return response()->json(['titulos' => $titulos, 'partidas' => $partidas]);
     }

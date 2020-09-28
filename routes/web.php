@@ -32,3 +32,5 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/index', 'PresupuestoController@index')->name('presupuestos.index');
 Route::get('/create', 'PresupuestoController@create')->name('presupuestos.create');
+
+Route::get('/mostrarPartidas/{id}', 'PresupuestoController@mostrarPartidas')->name('presupuestos.partidas');

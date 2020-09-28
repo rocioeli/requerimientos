@@ -10,6 +10,8 @@ class Partida extends Model
 
     protected $primaryKey = 'id_partida';
 
+    public $timestamps = false;
+    
     protected $fillable = [
         "id_presup",
         "codigo",
