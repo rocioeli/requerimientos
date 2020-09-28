@@ -25,7 +25,16 @@ class PresupuestoController extends Controller
         $presupuesto = new Presupuesto;
         $grupos = Grupo::all();
         $monedas = Moneda::all();
+        $presupuestos = Presupuesto::all()->where('estado',1);
         
-        return view('presupuestos.create', compact('presupuesto','grupos','monedas'));
+        return view('presupuestos.create', compact('presupuesto','grupos','monedas','presupuestos'));
+    }
+
+    public function mostrarPresupuesto(Presupuesto $presupuesto)
+    {
+        $titulos = $presupuesto->titulos;
+        $partidas = $presupuesto->partidas;
+
+        return response()->json(['titulos' => $titulos, 'partidas' => $partidas]);
     }
 }

@@ -1,11 +1,11 @@
-<div class="modal fade" id="presupuestoModal" tabindex="-1" role="dialog" aria-labelledby="presupuestoModalLabel" aria-hidden="true">
+<div class="modal fade" id="presupuestoCreate" tabindex="-1" role="dialog" aria-labelledby="presupuestoCreateLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h3 class="modal-title" id="presupuestoModalLabel">Datos Generales</h3>
+                <h3 class="modal-title" id="presupuestoCreateLabel">Datos Generales</h3>
             </div>
             <div class="modal-body">
                 <div class="row">

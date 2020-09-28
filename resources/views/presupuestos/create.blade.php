@@ -19,17 +19,21 @@
         <h3 class="box-title">Datos Generales</h3>
         <div class="box-tools pull-right">
             <div class="btn-group" role="group">
-                <button data-toggle="modal" data-target="#presupuestoModal" data-id="1649" 
-                    title="Nuevo Presupuesto" class="btn btn-box-tool">
-                    <i class="glyphicon glyphicon-file" aria-hidden="true"></i>
+                <button data-toggle="modal" data-target="#presupuestoCreate" data-id="1649" 
+                    title="Nuevo Presupuesto" class="btn btn-box-tool btn-sm btn-success">
+                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                 </button>
-                <button type="button" data-id="1649" title="Editar Datos Generales" 
-                    class="btn btn-box-tool editar-oportunidad" data-codigo="OKC2007042">
+                <button data-toggle="modal" data-target="#presupuestoCreate" 
+                    title="Editar Datos Generales" class="btn btn-box-tool btn-sm editar-presupuesto btn-warning">
                     <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
                 </button>
-                <a target="_blank" href="#" title="Imprimir" class="btn btn-box-tool">
+                <button type="button" data-toggle="modal" data-target="#presupuestosModal" 
+                    title="Buscar Presupuesto" class="btn btn-box-tool btn-sm btn-info">
                     <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
-                </a>
+                </button>
+                <!-- <a target="_blank" href="#" title="Imprimir" class="btn btn-box-tool">
+                    <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                </a> -->
             </div>
         </div>
     </div>
@@ -42,25 +46,25 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label">Código:</label>
                             <div class="col-md-2">
-                                <div class="form-control-static" name="codigo">PPY-20-0015</div>
+                                <div class="form-control-static" name="codigo"></div>
                             </div>
                         <label class="col-md-1 control-label">Grupo:</label>
                             <div class="col-md-1">
-                                <div class="form-control-static" name="name_grupo">Administracion</div>
+                                <div class="form-control-static" name="name_grupo"></div>
                             </div>
                         <label class="col-md-2 control-label">Fecha Emisión:</label>
-                            <div class="col-md-1">
-                                <div class="form-control-static" name="fecha_emision">22/12/2020</div>
+                            <div class="col-md-2">
+                                <div class="form-control-static" name="fecha_emision"></div>
                             </div>
                         <label class="col-md-1 control-label">Moneda:</label>
-                            <div class="col-md-2">
-                                <div class="form-control-static" name="name_moneda">Soles</div>
+                            <div class="col-md-1">
+                                <div class="form-control-static" name="name_moneda"></div>
                             </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-2 control-label">Descripción:</label>
                             <div class="col-md-10">
-                                <div class="form-control-static" name="descripcion">CONSULTORIA DE PROYECTOS TECNOLOGICOS PARA EL GOBIERNO REGIONAL DE TACNA</div>
+                                <div class="form-control-static" name="descripcion"></div>
                             </div>
                     </div>
                 </div>
@@ -76,7 +80,7 @@
         <div class="box-tools pull-right">
             <div class="btn-group" role="group">
                 <button data-toggle="tooltip" data-placement="bottom" title="Nuevo Título" 
-                    class="btn btn-box-tool add-new-title">
+                    class="btn btn-box-tool btn-success btn-sm add-new-title">
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                 </button>
                 <!-- <button type="button" data-id="1649" title="Editar Datos Generales" class="btn btn-box-tool editar-oportunidad" data-codigo="OKC2007042"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></button> -->
@@ -87,8 +91,8 @@
     <div class="box-body">
         <div class="row">
             <div class="col-md-12">
-                <table class="table" id="listaPartidas">
-                    <thead>
+                <table class="table table-sm table-hover table-bordered dt-responsive nowrap" id="listaPartidas">
+                    <thead style="background: gainsboro;">
                         <tr>
                             <th>Codigo</th>
                             <th>Descripción</th>
@@ -103,10 +107,42 @@
     </div>
 </div>
 
-@include('presupuestos.presupuestoModal')
+@include('presupuestos.presupuestoCreate')
+
+@include('presupuestos.presupuestosModal')
 
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('assets/datatables/dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/datatables/DataTables-1.10.21/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/datatables/DataTables-1.10.21/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/datatables/Buttons-1.6.3/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/datatables/Buttons-1.6.3/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/datatables/Buttons-1.6.3/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/datatables/Buttons-1.6.3/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/datatables/pdfmake-0.1.36/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/datatables/pdfmake-0.1.36/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/datatables/JSZip-2.5.0/jszip.min.js') }}"></script>
+
     <script src="{{('/js/presupuestos/titulos.js')}}"></script>
+    <script>
+    $(document).ready(function () {
+        $('#listaPresupuestos').DataTable({
+            // 'dom': 'lBfrtip',
+            'language' : idioma,
+            'destroy' : true,
+        });
+
+        $('#listaPresupuestos tbody tr').on('click', function(){
+        $('[name=id_presup]').val($(this).attr('value'));
+        $('[name=codigo]').text($(this).find('td')[0].innerText);
+        $('[name=descripcion]').text($(this).find('td')[1].innerText);
+        $('[name=name_grupo]').text($(this).find('td')[2].innerText);
+        $('[name=fecha_emision]').text($(this).find('td')[3].innerText);
+        $('[name=name_moneda]').text($(this).find('td')[4].innerText);
+        $('#presupuestosModal').modal('hide');
+    });
+    });
+    </script>
 @endsection
