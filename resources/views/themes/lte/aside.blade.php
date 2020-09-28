@@ -24,12 +24,12 @@
 			</li>
 			<li class="treeview">
 				<a href="#">
-					<i class="fa fa-bullhorn"></i><span>Presupuesto</span>
+					<i class="fa fa-usd"></i><span>Finanzas</span>
 					<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
 				</a>
 				<ul class="treeview-menu">
 					<li><a href="{{ route('presupuestos.index') }}"><i class="fa fa-circle-o"></i> Lista de Presupuestos</a></li>
-					<li><a href="{{ route('presupuestos.create') }}"><i class="fa fa-circle-o"></i> Nuevo Presupuesto</a></li>
+					<li><a href="{{ route('presupuestos.create') }}"><i class="fa fa-circle-o"></i> Presupuesto</a></li>
 					<li><a href="index.html"><i class="fa fa-circle-o"></i> Centro de Costos</a></li>
 				</ul>
 			</li>

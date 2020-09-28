@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Presupuestos\Presupuesto;
 use App\Models\Presupuestos\Grupo;
+use App\Models\Presupuestos\Moneda;
 
 class PresupuestoController extends Controller
 {
@@ -23,7 +24,8 @@ class PresupuestoController extends Controller
     {
         $presupuesto = new Presupuesto;
         $grupos = Grupo::all();
+        $monedas = Moneda::all();
         
-        return view('presupuestos.create', compact('presupuesto','grupos'));
+        return view('presupuestos.create', compact('presupuesto','grupos','monedas'));
     }
 }
