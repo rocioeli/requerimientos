@@ -32,9 +32,13 @@ class PresupuestoController extends Controller
 
     public function mostrarPartidas($id)
     {
-        $titulos = Presupuesto::find($id)->titulos;
-        $partidas = Presupuesto::find($id)->partidas;
+        $presup = Presupuesto::findOrFail($id);
+        $presup->grupo;
+        $presup->monedaSeleccionada;
+        $presup->titulos;
+        $presup->partidas;
 
-        return response()->json(['titulos' => $titulos, 'partidas' => $partidas]);
+        return response()->json($presup);
     }
+
 }

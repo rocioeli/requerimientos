@@ -30,7 +30,30 @@ Route::middleware(['auth'])->group(function () {
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 });
 
-Route::get('/index', 'PresupuestoController@index')->name('presupuestos.index');
-Route::get('/create', 'PresupuestoController@create')->name('presupuestos.create');
+// Route::get('presupuestos-index', 'PresupuestoController@index')->name('presupuestos.index');
+// Route::get('presupuestos-create', 'PresupuestoController@create')->name('presupuestos.create');
 
-Route::get('/mostrarPartidas/{id}', 'PresupuestoController@mostrarPartidas')->name('presupuestos.partidas');
+
+Route::group(['as' => 'finanzas.', 'prefix' => 'finanzas'], function(){
+	
+    Route::group(['as' => 'lista-presupuestos.', 'prefix' => 'lista-presupuestos'], function(){
+        // Lista de Presupuestos
+        Route::get('index', 'PresupuestoController@index')->name('index');
+
+    });
+
+    Route::group(['as' => 'presupuesto.', 'prefix' => 'presupuesto'], function(){
+        // Presupuesto
+        Route::get('create', 'PresupuestoController@create')->name('index');
+        Route::get('mostrarPartidas/{id}', 'PresupuestoController@mostrarPartidas')->name('mostrar-partidas');
+        
+        Route::post('guardar-titulo', 'TituloController@store')->name('guardar-titulo');
+        Route::post('actualizar-titulo', 'TituloController@update')->name('actualizar-titulo');
+        Route::get('anular-titulo/{id}','TituloController@destroy')->name('anular-titulo');
+
+        Route::post('guardar-partida', 'PartidaController@store')->name('guardar-partida');
+        Route::post('actualizar-partida', 'PartidaController@update')->name('actualizar-partida');
+        Route::get('anular-partida/{id}','PartidaController@destroy')->name('anular-partida');
+
+    });
+});

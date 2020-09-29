@@ -16,7 +16,7 @@
                             <th scope="col">Descripción</th>
                             <th scope="col">Grupo</th>
                             <th scope="col">Fecha</th>
-                            <th scope="col">Mnd</th>
+                            <!-- <th scope="col">Mnd</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -26,7 +26,7 @@
                             <td>{{ $item->descripcion }}</td>
                             <td>{{ $item->grupo->descripcion }}</td>
                             <td>{{ $item->fecha_emision }}</td>
-                            <td>{{ $item->monedaSeleccionada->descripcion }}</td>
+                            <!-- <td>{{ $item->monedaSeleccionada->descripcion }}</td> -->
                         </tr>
                         @empty
                         <tr><td colSpan="2">No hay registros para mostrar</td></tr>

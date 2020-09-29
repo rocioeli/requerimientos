@@ -2,6 +2,12 @@
 
 @section('links')
 <link href="/assets/datatables/DataTables-1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+    .lbl-codigo:hover{
+        color:#007bff !important; 
+        cursor:pointer;
+    }
+</style>
 @endsection
 
 @section('title') Lista de Presupuestos @endsection
@@ -21,7 +27,7 @@
                     <table class="table table-sm table-hover table-bordered dt-responsive nowrap" 
                         id="listaPresupuestos">
                         <thead>
-                            <tr style="background: lightskyblue;">
+                            <tr style="background: gainsboro;">
                                 <th hidden></th>
                                 <th scope="col">Código</th>
                                 <th scope="col">Descripción</th>
@@ -34,11 +40,11 @@
                             @forelse($presupuestos as $presup)
                             <tr>
                                 <td hidden>{{ $presup->id_presup }}</td>
-                                <td>{{ $presup->codigo }}</td>
+                                <td><label class="lbl-codigo" title="Abrir Presupuesto" onClick="abrirPresupuesto('{{ $presup->id_presup }}')">{{ $presup->codigo }}</label></td>
                                 <td>{{ $presup->descripcion }}</td>
                                 <td>{{ $presup->fecha_emision }}</td>
-                                <td>{{ $presup->id_grupo }}</td>
-                                <td>{{ $presup->id_empresa }}</td>
+                                <td>{{ $presup->grupo->descripcion }}</td>
+                                <td>{{ $presup->empresa->codigo }}</td>
                             </tr>
                             @empty
                                 <tr><td colSpan="6">No hay registros para mostrar</td></tr>
@@ -65,12 +71,21 @@
     <script src="{{ asset('assets/datatables/JSZip-2.5.0/jszip.min.js') }}"></script>
 
     <script>
-    $(document).ready(function () {
-        $('#listaPresupuestos').DataTable({
-            // 'dom': 'lBfrtip',
-            'language' : idioma,
-            'destroy' : true,
+        $(document).ready(function () {
+
+            seleccionarMenu(window.location);
+
+            $('#listaPresupuestos').DataTable({
+                // 'dom': 'lBfrtip',
+                'language' : idioma,
+                'destroy' : true,
+            });
         });
-    });
+
+        function abrirPresupuesto(id){
+            console.log('abrirPresupuesto()');
+            localStorage.setItem("id_presup",id);
+            location.assign("/finanzas/presupuesto/create");
+        }
     </script>
 @endsection

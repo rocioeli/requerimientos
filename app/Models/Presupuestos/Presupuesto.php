@@ -31,6 +31,11 @@ class Presupuesto extends Model
         return $this->belongsTo(Grupo::class, 'id_grupo');
     }
 
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class, 'id_empresa');
+    }
+
     public function monedaSeleccionada()
     {
         return $this->belongsTo(Moneda::class, 'moneda');
@@ -38,11 +43,11 @@ class Presupuesto extends Model
 
     public function Partidas()
     {
-        return $this->hasMany(Partida::class, 'id_presup');
+        return $this->hasMany(Partida::class, 'id_presup')->where('estado', 1);
     }
 
     public function Titulos()
     {
-        return $this->hasMany(Titulo::class, 'id_presup', 'id_presup');
+        return $this->hasMany(Titulo::class, 'id_presup')->where('estado', 1);
     }
 }

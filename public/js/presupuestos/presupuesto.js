@@ -7,17 +7,22 @@ $(document).ready(function () {
 
     $('#listaPresupuestos tbody tr').on('click', function(){
         var id = $(this).attr('value');
-        $('[name=id_presup]').val(id);
-        $('[name=codigo]').text($(this).find('td')[0].innerText);
-        $('[name=descripcion]').text($(this).find('td')[1].innerText);
-        $('[name=name_grupo]').text($(this).find('td')[2].innerText);
-        $('[name=fecha_emision]').text($(this).find('td')[3].innerText);
-        $('[name=name_moneda]').text($(this).find('td')[4].innerText);
         
         $('#presupuestosModal').modal('hide');
         mostrarPartidas(id);
     });
 });
+
+$(function(){
+    var id_presup = localStorage.getItem("id_presup");
+    if (id_presup !== null){
+        mostrarPartidas(id_presup);
+        localStorage.removeItem("id_presup");
+    }
+});
+
+let nuevo_id_titulo = "";
+let nueva_id_partida = "";
 
 function mostrarPartidas(id){
     $.ajax({
@@ -27,11 +32,17 @@ function mostrarPartidas(id){
         dataType: 'JSON',
         success: function(response){
             console.log(response);
-            console.log(response['titulos']);
+            console.log(response.grupo['descripcion']);
+            $('[name=id_presup]').val(id);
+            $('[name=codigo]').text(response.codigo);
+            $('[name=descripcion]').text(response.descripcion);
+            $('[name=name_grupo]').text(response.grupo['descripcion']);
+            $('[name=fecha_emision]').text(response.fecha_emision);
+            $('[name=name_moneda]').text(response.moneda_seleccionada['descripcion']);
+
             var html = ''; 
-            var suma_servicios = 0;
 
-            response['titulos'].sort(function(a, b) {
+            response.titulos.sort(function(a, b) {
                 if (a.codigo > b.codigo) {
                   return 1;
                 }
@@ -41,7 +52,7 @@ function mostrarPartidas(id){
                 return 0;
             });
 
-            response['partidas'].sort(function(a, b) {
+            response.partidas.sort(function(a, b) {
                 if (a.codigo > b.codigo) {
                   return 1;
                 }
@@ -51,42 +62,78 @@ function mostrarPartidas(id){
                 return 0;
             });
 
-            response['titulos'].forEach(element => {
-                // suma_servicios += parseFloat(element.valor_total);
+            response.titulos.forEach(element => {
                 html += `<tr id="${element.id_titulo}" style="background: LightCyan;">
-                    <td>${element.codigo}</td>
+                    <td><a name="${element.id_titulo}"></a>${element.codigo}</td>
                     <td>${element.descripcion}</td>
                     <td>${element.total}</td>
                     <td style="padding:0px;">
-                        <button class="btn btn-box-tool btn-sm btn-danger delete-titulo" data-toggle="tooltip" data-placement="bottom" title="Descartar" >
-                        <i class="glyphicon glyphicon-remove" aria-hidden="true"></i></button>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-box-tool btn-xs btn-success agregar-titulo" data-toggle="tooltip" data-placement="bottom" 
+                                title="Agregar SubTitulo" data-codigo="${element.codigo}">
+                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>
+                            <button class="btn btn-box-tool btn-xs btn-primary agregar-partida" data-toggle="tooltip" data-placement="bottom" 
+                                title="Agregar Partida" data-codigo="${element.codigo}" data-descripcion="${element.descripcion}">
+                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>
+                            <button class="btn btn-box-tool btn-xs btn-info editar-titulo" data-toggle="tooltip" data-placement="bottom" 
+                                title="Editar SubTitulo" data-id="${element.id_titulo}" data-descripcion="${element.descripcion}">
+                                <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></button>
+                            <button class="btn btn-box-tool btn-xs btn-danger anular-titulo" data-toggle="tooltip" data-placement="bottom" 
+                                title="Anular SubTitulo" data-id="${element.id_titulo}">
+                                <i class="glyphicon glyphicon-remove" aria-hidden="true"></i></button>
+                        </div>
                     </td>
+                    <td hidden>${element.cod_padre}</td>
+                    <td hidden></td>
                 </tr>`;
 
-                response['partidas'].forEach(partida => {
+                response.partidas.forEach(partida => {
 
                     if (element.codigo == partida.cod_padre){
-                        // suma_servicios += parseFloat(element.valor_total);
+                        
                         html += `<tr id="${partida.id_partida}">
-                            <th>${partida.codigo}</th>
-                            <th>${partida.descripcion}</th>
-                            <th>${partida.importe_total}</th>
-                            <th style="padding:0px;">
-                                <button class="btn btn-box-tool btn-sm btn-danger delete-partida" data-toggle="tooltip" data-placement="bottom" title="Descartar" >
-                                <i class="glyphicon glyphicon-remove" aria-hidden="true"></i></button>
-                            </th>
+                            <td><a name="${element.id_partida}"></a>${partida.codigo}</td>
+                            <td>${partida.descripcion}</td>
+                            <td>${partida.importe_total}</td>
+                            <td style="padding:0px;">
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-box-tool btn-xs btn-default ver-detalle" data-toggle="tooltip" data-placement="bottom" 
+                                        title="Ver Detalle"><i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></button>
+                                    <button class="btn btn-box-tool btn-xs btn-info editar-titulo" data-toggle="tooltip" data-placement="bottom" 
+                                        title="Editar Partida"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></button>
+                                    <button class="btn btn-box-tool btn-xs btn-danger anular-titulo" data-toggle="tooltip" data-placement="bottom" 
+                                        title="Anular Partida"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></button>
+                                </div>
+                            </td>
+                            <td hidden></td>
+                            <td hidden>${element.cod_padre}</td>
                         </tr>`;
                     }
                     
                 });
             });
             $('#listaPartidas tbody').html(html);
-            // $('[name=total_directos]').text(formatDecimalDigitos(suma_servicios,2));
-            // actualizaTotales();
+            
+            if (nuevo_id_titulo !== ''){
+                location.href = "#"+nuevo_id_titulo;
+            }
+            else if (nueva_id_partida !== ''){
+                location.href = "#"+nueva_id_partida;
+            }
         }
     }).fail( function( jqXHR, textStatus, errorThrown ){
         console.log(jqXHR);
         console.log(textStatus);
         console.log(errorThrown);
     });
+}
+
+function leftZero(canti, number){
+    let vLen = number.toString();
+    let nLen = vLen.length;
+    let zeros = '';
+    for(var i=0; i<(canti-nLen); i++){
+        zeros = zeros+'0';
+    }
+    return zeros+number;
 }

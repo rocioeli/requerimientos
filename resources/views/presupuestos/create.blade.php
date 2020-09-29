@@ -2,6 +2,7 @@
 
 @section('links')
 <link href="/assets/datatables/DataTables-1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 @endsection
 
 @section('title') Presupuesto @endsection
@@ -108,8 +109,9 @@
 </div>
 
 @include('presupuestos.presupuestoCreate')
-
 @include('presupuestos.presupuestosModal')
+
+@include('presupuestos.partidaCreate')
 
 @endsection
 
@@ -125,7 +127,12 @@
     <script src="{{ asset('assets/datatables/pdfmake-0.1.36/vfs_fonts.js') }}"></script>
     <script src="{{ asset('assets/datatables/JSZip-2.5.0/jszip.min.js') }}"></script>
 
-    <script src="{{('/js/presupuestos/titulos.js')}}"></script>
     <script src="{{('/js/presupuestos/presupuesto.js')}}"></script>
-
+    <script src="{{('/js/presupuestos/titulos.js')}}"></script>
+    <script src="{{('/js/presupuestos/partida.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            seleccionarMenu(window.location);
+        });
+    </script>
 @endsection
