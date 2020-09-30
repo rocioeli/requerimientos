@@ -1,6 +1,4 @@
 $(".add-new-title").on('click',function(){
-    $(this).attr("disabled", "disabled");
-    
     var row = `<tr>
         <td width="150px"><input type="text" class="form-control" name="codigo" value="01"></td>
         <td><input type="text" class="form-control" name="descripcion"></td>
@@ -18,41 +16,66 @@ $(".add-new-title").on('click',function(){
 });
 
 $("#listaPartidas tbody").on('click', ".agregar-titulo", function(){
-    $(this).attr("disabled", "disabled");
     var cod = $(this).data('codigo');
+    var des = $(this).data('descripcion');
+    var i = 1;
+    var filas = document.querySelectorAll('#listaPartidas tbody tr');
     
-    var titulo = prompt("Ingrese la descripción del título", "Ingrese una descripción...");
-    if (titulo != null) {
-        var i = 1;
-        var filas = document.querySelectorAll('#listaPartidas tbody tr');
-        filas.forEach(function(e){
-            var colum = e.querySelectorAll('td');
-            var padre = colum[4].innerText;
-            if (padre == cod){
-                i++;
-            }
-        });
-        var id_pres = $('[name=id_presup]').val();
-        var data = 'id_presup='+id_pres+'&codigo='+cod+'.'+leftZero(2,i)+'&descripcion='+titulo+'&cod_padre='+cod;
-        
-        nuevo_id_titulo = "";
-        guardar_titulo(data, id_pres);
-        
-    }
+    filas.forEach(function(e){
+        var colum = e.querySelectorAll('td');
+        var padre = colum[4].innerText;
+        if (padre == cod){
+            i++;
+        }
+    });
+
+    $('#tituloCreate').modal({
+        show: true
+    });
+    $('#submit-tituloCreate').removeAttr('disabled');
+
+    $('[name=codigo]').val(cod+'.'+leftZero(2,i));
+    $('[name=cod_padre]').val(cod);
+    $('[name=id_titulo]').val('');
+    $('[name=descripcion]').val('');
+    $('#cod_padre_titu').text(cod);
+    $('#descripcion_padre_titu').text(des);
+
 });
 
-function guardar_titulo(data, id_pres){
+$("#form-tituloCreate").on("submit", function(e){
+    e.preventDefault();
+    var data = $(this).serialize();
+    var id = $('[name=id_titulo]').val();
+    var url = '';
+    $('#submit-tituloCreate').attr('disabled','true');
+    
+    if (id == ''){
+        url = 'guardar-titulo';
+    } else {
+        url = 'actualizar-titulo';
+    }
+    console.log(data);
+    guardar_titulo(data, url);
+
+    $('#tituloCreate').modal('hide');
+});
+
+function guardar_titulo(data, url){
     $.ajax({
         type: 'POST',
         headers: {'X-CSRF-TOKEN': csrf_token},
-        url: "guardar-titulo",
+        url: url,
         data: data,
         dataType: 'JSON',
         success: function(response){
             console.log(response);
-            nuevo_id_titulo = response.id_titulo;
-            alert('Se guardo exitosamente');
-            mostrarPartidas(id_pres);
+            if (url == 'guardar-titulo'){
+                nuevo_id_titulo = response.id_titulo;
+            } else {
+                nuevo_id_titulo = '';
+            }
+            mostrarPartidas(response.id_presup);
         }
     }).fail( function( jqXHR, textStatus, errorThrown ){
         console.log(jqXHR);
@@ -62,44 +85,27 @@ function guardar_titulo(data, id_pres){
 }
 
 $("#listaPartidas tbody").on('click', ".editar-titulo", function(){
-    $(this).attr("disabled", "disabled");
     var id = $(this).data('id');
+    var cod = $(this).data('codigo');
     var des = $(this).data('descripcion');
+    var codp = $(this).data('codpadre');
+    var desp = $(this).data('despadre');
     
-    var titulo = prompt("Ingrese la descripción del título", des);
-    if (titulo != null) {
-        var id_pres = $('[name=id_presup]').val();
-        var data = 'id_titulo='+id+
-                '&descripcion='+titulo;
-        
-        nuevo_id_titulo = "";
-        actualizar_titulo(data, id_pres);
-        
-    }
+    $('#tituloCreate').modal({
+        show: true
+    });
+    $('#submit-tituloCreate').removeAttr('disabled');
+
+    $('[name=id_titulo]').val(id);
+    $('[name=codigo]').val(cod);
+    $('[name=cod_padre]').val(codp);
+    $('[name=descripcion]').val(des);
+    $('#cod_padre_titu').text(codp);
+    $('#descripcion_padre_titu').text(desp);
+
 });
 
-function actualizar_titulo(data, id_pres){
-    $.ajax({
-        type: 'POST',
-        headers: {'X-CSRF-TOKEN': csrf_token},
-        url: "actualizar-titulo",
-        data: data,
-        dataType: 'JSON',
-        success: function(response){
-            console.log(response);
-            nuevo_id_titulo = response.id_titulo;
-            alert('Se actualizó exitosamente');
-            mostrarPartidas(id_pres);
-        }
-    }).fail( function( jqXHR, textStatus, errorThrown ){
-        console.log(jqXHR);
-        console.log(textStatus);
-        console.log(errorThrown);
-    });
-}
-
 $("#listaPartidas tbody").on('click', ".anular-titulo", function(){
-    $(this).attr("disabled", "disabled");
     var id = $(this).data('id');
     var rspta = confirm('¿Está seguro que desea anular?');
     if (rspta){

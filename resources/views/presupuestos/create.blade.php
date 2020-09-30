@@ -20,7 +20,7 @@
         <h3 class="box-title">Datos Generales</h3>
         <div class="box-tools pull-right">
             <div class="btn-group" role="group">
-                <button data-toggle="modal" data-target="#presupuestoCreate" data-id="1649" 
+                <button data-toggle="modal" data-target="#presupuestoCreate" 
                     title="Nuevo Presupuesto" class="btn btn-box-tool btn-sm btn-success">
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                 </button>
@@ -112,6 +112,7 @@
 @include('presupuestos.presupuestosModal')
 
 @include('presupuestos.partidaCreate')
+@include('presupuestos.tituloCreate')
 
 @endsection
 
@@ -128,7 +129,7 @@
     <script src="{{ asset('assets/datatables/JSZip-2.5.0/jszip.min.js') }}"></script>
 
     <script src="{{('/js/presupuestos/presupuesto.js')}}"></script>
-    <script src="{{('/js/presupuestos/titulos.js')}}"></script>
+    <script src="{{('/js/presupuestos/titulo.js')}}"></script>
     <script src="{{('/js/presupuestos/partida.js')}}"></script>
     <script>
         $(document).ready(function () {
