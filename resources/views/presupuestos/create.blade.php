@@ -81,7 +81,7 @@
         <div class="box-tools pull-right">
             <div class="btn-group" role="group">
                 <button data-toggle="tooltip" data-placement="bottom" title="Nuevo Título" 
-                    class="btn btn-box-tool btn-success btn-sm add-new-title">
+                    class="btn btn-box-tool btn-success btn-sm nuevo-titulo">
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                 </button>
                 <!-- <button type="button" data-id="1649" title="Editar Datos Generales" class="btn btn-box-tool editar-oportunidad" data-codigo="OKC2007042"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></button> -->

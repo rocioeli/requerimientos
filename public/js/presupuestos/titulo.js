@@ -1,18 +1,28 @@
-$(".add-new-title").on('click',function(){
-    var row = `<tr>
-        <td width="150px"><input type="text" class="form-control" name="codigo" value="01"></td>
-        <td><input type="text" class="form-control" name="descripcion"></td>
-        <td>1000</td>
-        <td style="padding: 0px;">
-            <div class="btn-group" role="group">
-                <button class="btn btn-box-tool btn-xs btn-success add" data-toggle="tooltip" data-placement="bottom" title="Agregar" >
-                    <i class="glyphicon glyphicon-ok" aria-hidden="true"></i></button>
-                <button class="btn btn-box-tool btn-xs btn-danger delete" data-toggle="tooltip" data-placement="bottom" title="Descartar" >
-                    <i class="glyphicon glyphicon-remove" aria-hidden="true"></i></button>
-            </div>
-        </td>
-    </tr>`;
-    $("#listaPartidas").append(row);
+$(".nuevo-titulo").on('click',function(){
+    var i = 1;
+    var filas = document.querySelectorAll('#listaPartidas tbody tr');
+    
+    filas.forEach(function(e){
+        var colum = e.querySelectorAll('td');
+        var padre_titu = colum[4].innerText;
+        var padre_par = colum[5].innerText;
+        if (padre_titu == '' && padre_par == ''){
+            i++;
+        }
+    });
+
+    $('#tituloCreate').modal({
+        show: true
+    });
+    $('#submit-tituloCreate').removeAttr('disabled');
+
+    $('[name=codigo]').val(leftZero(2,i));
+    $('[name=cod_padre]').val('');
+    $('[name=id_titulo]').val('');
+    $('[name=descripcion]').val('');
+    $('#cod_padre_titu').text('');
+    $('#descripcion_padre_titu').text('');
+
 });
 
 $("#listaPartidas tbody").on('click', ".agregar-titulo", function(){
