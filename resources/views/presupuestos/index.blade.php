@@ -14,7 +14,7 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb">
-        <li><a href="javascript: void();"><i class="fa fa-building"></i> Presupuestos</a></li>
+        <li><i class="fa fa-usd"></i> Finanzas</li>
         <li class="active"> @yield('title')</li>
     </ol>
 @endsection
