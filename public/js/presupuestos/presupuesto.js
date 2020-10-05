@@ -19,10 +19,78 @@ $(function(){
         mostrarPartidas(id_presup);
         localStorage.removeItem("id_presup");
     }
-    // $('[data-toggle="tooltip"]').tooltip();
 });
 
-let nuevo_id_titulo = "";
+$(".nuevo-presupuesto").on('click',function(){
+    $('#presupuestoCreate').modal({
+        show: true
+    });
+    
+    $('#submit-presupuestoCreate').removeAttr('disabled');
+
+    $('[name=id_presup]').val('');
+    $('#cod_presup').text('');
+    $('[name=moneda]').val('1');
+    $('[name=descripcion]').val('');
+    $('[name=id_grupo]').val('0');
+});
+
+$(".editar-presupuesto").on('click', function(){
+    $('#presupuestoCreate').modal({
+        show: true
+    });
+    
+    $('#submit-presupuestoCreate').removeAttr('disabled');
+    
+    if (presupuesto !== null){
+        $('[name=id_presup]').val(presupuesto.id_presup);
+        $('#cod_presup').text(presupuesto.codigo);
+        $('[name=moneda]').val(presupuesto.moneda);
+        $('[name=descripcion]').val(presupuesto.descripcion);
+        $('[name=id_grupo]').val(presupuesto.id_grupo);
+        $('[name=fecha_emision]').val(presupuesto.fecha_emision);
+    }
+});
+
+$("#form-presupuestoCreate").on("submit", function(e){
+    e.preventDefault();
+    var data = $(this).serialize();
+    var id = $('[name=id_presup]').val();
+    var url = '';
+    $('#submit-presupuestoCreate').attr('disabled','true');
+    
+    if (id == ''){
+        url = 'guardar-presupuesto';
+    } else {
+        url = 'actualizar-presupuesto';
+    }
+    console.log(data);
+    guardar_presupuesto(data, url);
+
+    $('#presupuestoCreate').modal('hide');
+});
+
+function guardar_presupuesto(data, url){
+    $.ajax({
+        type: 'POST',
+        headers: {'X-CSRF-TOKEN': csrf_token},
+        url: url,
+        data: data,
+        dataType: 'JSON',
+        success: function(response){
+            console.log(response);
+            nuevo_id_titulo = '';
+            mostrarPartidas(response.id_presup);
+        }
+    }).fail( function( jqXHR, textStatus, errorThrown ){
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+    });
+}
+
+let nuevo_id_titulo = '';
+let presupuesto = null;
 
 function mostrarPartidas(id){
     $.ajax({
@@ -32,7 +100,8 @@ function mostrarPartidas(id){
         dataType: 'JSON',
         success: function(response){
             console.log(response);
-            console.log(response.grupo['descripcion']);
+            presupuesto = response;
+
             $('[name=id_presup]').val(id);
             $('[name=codigo]').text(response.codigo);
             $('[name=descripcion]').text(response.descripcion);

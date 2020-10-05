@@ -41,4 +41,51 @@ class PresupuestoController extends Controller
         return response()->json($presup);
     }
 
+    public function store()
+    {
+        $codigo = $this->presupNextCodigo(  request('id_grupo'),
+                                            request('fecha_emision') );
+
+        $data = Presupuesto::create([
+            'id_empresa' => 4,
+            'id_grupo' => request('id_grupo'),
+            'fecha_emision' => request('fecha_emision'),
+            'codigo' => $codigo,
+            'descripcion' => strtoupper(request('descripcion')),
+            'moneda' => request('moneda'),
+            // 'responsable' => request('responsable'),
+            // 'unid_program' => request('unid_program'),
+            // 'cantidad' => request('cantidad'),
+            'fecha_registro' => date('Y-m-d H:i:s'),
+            'estado' => 1
+        ]);
+
+        return response()->json($data);
+    }
+
+    public function presupNextCodigo($id_grupo,$fecha)
+    {
+        $yyyy = date('Y',strtotime($fecha));
+        $anio = date('y',strtotime($fecha));
+
+        $grupo = Grupo::findOrFail($id_grupo);
+        
+        $correlativo = Presupuesto::where([ ['id_grupo','=',$id_grupo],
+                                            ['estado','=',1] ])
+                                    ->whereYear('fecha_emision', '=', $yyyy)
+                                    ->count();
+
+        $next = $this->leftZero(3,$correlativo+1);
+
+        return 'P'.$grupo->abreviatura.$anio.$next;
+    }
+
+    public function leftZero($lenght, $number){
+        $nLen = strlen($number);
+        $zeros = '';
+        for($i=0; $i<($lenght-$nLen); $i++){
+            $zeros = $zeros.'0';
+        }
+        return $zeros.$number;
+    }
 }

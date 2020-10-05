@@ -46,6 +46,8 @@ Route::group(['as' => 'finanzas.', 'prefix' => 'finanzas'], function(){
         // Presupuesto
         Route::get('create', 'PresupuestoController@create')->name('index');
         Route::get('mostrarPartidas/{id}', 'PresupuestoController@mostrarPartidas')->name('mostrar-partidas');
+        Route::post('guardar-presupuesto', 'PresupuestoController@store')->name('guardar-presupuesto');
+        Route::post('actualizar-presupuesto', 'PresupuestoController@update')->name('actualizar-presupuesto');
         
         Route::post('guardar-titulo', 'TituloController@store')->name('guardar-titulo');
         Route::post('actualizar-titulo', 'TituloController@update')->name('actualizar-titulo');

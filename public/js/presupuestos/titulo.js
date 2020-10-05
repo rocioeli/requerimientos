@@ -6,7 +6,9 @@ $(".nuevo-titulo").on('click',function(){
         var colum = e.querySelectorAll('td');
         var padre_titu = colum[4].innerText;
         var padre_par = colum[5].innerText;
-        if (padre_titu == '' && padre_par == ''){
+        console.log(padre_titu+'-'+padre_par);
+        if ((padre_titu == '' || padre_titu == null) && 
+            (padre_par == '' || padre_par == null)){
             i++;
         }
     });
@@ -15,7 +17,7 @@ $(".nuevo-titulo").on('click',function(){
         show: true
     });
     $('#submit-tituloCreate').removeAttr('disabled');
-
+    console.log('codigo'+i);
     $('[name=codigo]').val(leftZero(2,i));
     $('[name=cod_padre]').val('');
     $('[name=id_titulo]').val('');

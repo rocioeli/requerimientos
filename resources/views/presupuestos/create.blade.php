@@ -20,12 +20,12 @@
         <h3 class="box-title">Datos Generales</h3>
         <div class="box-tools pull-right">
             <div class="btn-group" role="group">
-                <button data-toggle="modal" data-target="#presupuestoCreate" 
-                    title="Nuevo Presupuesto" class="btn btn-box-tool btn-sm btn-success">
+                <button data-toggle="modal" title="Nuevo Presupuesto" 
+                    class="btn btn-box-tool btn-sm btn-success nuevo-presupuesto">
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                 </button>
-                <button data-toggle="modal" data-target="#presupuestoCreate" 
-                    title="Editar Datos Generales" class="btn btn-box-tool btn-sm editar-presupuesto btn-warning">
+                <button data-toggle="modal" title="Editar Datos Generales" 
+                    class="btn btn-box-tool btn-sm btn-warning editar-presupuesto">
                     <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
                 </button>
                 <button type="button" data-toggle="modal" data-target="#presupuestosModal" 
@@ -84,8 +84,6 @@
                     class="btn btn-box-tool btn-success btn-sm nuevo-titulo">
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                 </button>
-                <!-- <button type="button" data-id="1649" title="Editar Datos Generales" class="btn btn-box-tool editar-oportunidad" data-codigo="OKC2007042"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></button> -->
-                <!-- <a target="_blank" href="#" title="Imprimir" class="btn btn-box-tool"><i class="glyphicon glyphicon-print" aria-hidden="true"></i></a> -->
             </div>
         </div>
     </div>
@@ -110,7 +108,6 @@
 
 @include('presupuestos.presupuestoCreate')
 @include('presupuestos.presupuestosModal')
-
 @include('presupuestos.partidaCreate')
 @include('presupuestos.tituloCreate')
 
