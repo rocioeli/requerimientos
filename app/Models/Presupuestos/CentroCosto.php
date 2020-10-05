@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Models\Presupuestos;
+
+use Illuminate\Database\Eloquent\Model;
+
+class CentroCosto extends Model
+{
+    protected $table = 'presupuesto.centro_costo';
+
+    protected $primaryKey = 'id_centro_costo';
+
+    public $timestamps = false;
+    
+    protected $fillable = [
+        "codigo",
+        "id_padre",
+        "descripcion",
+        "nivel",
+        "estado"
+    ];
+
+    public function padre()
+    {
+        return $this->belongsTo(CentroCosto::class, 'id_padre');
+    }
+}

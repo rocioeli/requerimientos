@@ -30,7 +30,7 @@
 				<ul class="treeview-menu">
 					<li><a href="{{ route('finanzas.lista-presupuestos.index') }}"><i class="fa fa-circle-o"></i> Lista de Presupuestos</a></li>
 					<li><a href="{{ route('finanzas.presupuesto.index') }}"><i class="fa fa-circle-o"></i> Presupuesto</a></li>
-					<li><a href="index.html"><i class="fa fa-circle-o"></i> Centro de Costos</a></li>
+					<li><a href="{{ route('finanzas.centro-costos.index') }}"><i class="fa fa-circle-o"></i> Centro de Costos</a></li>
 				</ul>
 			</li>
 		</ul>

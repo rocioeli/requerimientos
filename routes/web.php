@@ -58,4 +58,14 @@ Route::group(['as' => 'finanzas.', 'prefix' => 'finanzas'], function(){
         Route::get('anular-partida/{id}','PartidaController@destroy')->name('anular-partida');
 
     });
+
+    Route::group(['as' => 'centro-costos.', 'prefix' => 'centro-costos'], function(){
+        //Centro de Costos
+        Route::get('index', 'CentroCostoController@index')->name('index');
+        Route::get('mostrar-centro-costos', 'CentroCostoController@mostrarCentroCostos')->name('mostrar-centro-costos');
+        Route::post('guardar-centro-costo', 'CentroCostoController@store')->name('guardar-centro-costo');
+        Route::post('actualizar-centro-costo', 'CentroCostoController@update')->name('actualizar-centro-costo');
+        Route::get('anular-centro-costo/{id}','CentroCostoController@destroy')->name('anular-centro-costo');
+
+    });
 });
