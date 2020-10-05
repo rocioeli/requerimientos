@@ -13,6 +13,7 @@ class PresupuestoController extends Controller
     // {
     //     $this->middleware('auth');
     // }
+
     public function index()
     {
         $presupuestos = Presupuesto::all()->where('estado',1);
@@ -60,6 +61,18 @@ class PresupuestoController extends Controller
             'estado' => 1
         ]);
 
+        return response()->json($data);
+    }
+
+    public function update()
+    {
+        $data = Presupuesto::findOrFail(request('id_presup'));
+        $data->update([
+            'id_grupo' => request('id_grupo'),
+            'fecha_emision' => request('fecha_emision'),
+            'descripcion' => strtoupper(request('descripcion')),
+            'moneda' => request('moneda')
+        ]);
         return response()->json($data);
     }
 
