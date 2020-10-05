@@ -1,17 +1,6 @@
-$(document).ready(function () {
-    $('#listaPresupuestos').DataTable({
-        // 'dom': 'lBfrtip',
-        'language' : idioma,
-        'destroy' : true,
-    });
+// $(document).ready(function () {
 
-    $('#listaPresupuestos tbody tr').on('click', function(){
-        var id = $(this).attr('value');
-        
-        $('#presupuestosModal').modal('hide');
-        mostrarPartidas(id);
-    });
-});
+// });
 
 $(function(){
     var id_presup = localStorage.getItem("id_presup");
@@ -19,6 +8,19 @@ $(function(){
         mostrarPartidas(id_presup);
         localStorage.removeItem("id_presup");
     }
+    $('#listaPresupuestos').DataTable({
+        // 'dom': 'lBfrtip',
+        'language' : idioma,
+        'destroy' : true,
+    });
+
+});
+
+$('#listaPresupuestos tbody tr').on('click', function(){
+    var id = $(this).attr('value');
+    
+    $('#presupuestosModal').modal('hide');
+    mostrarPartidas(id);
 });
 
 $(".nuevo-presupuesto").on('click',function(){
@@ -191,6 +193,17 @@ function mostrarPartidas(id){
                             </td>
                             <td hidden></td>
                             <td hidden>${partida.cod_padre}</td>
+                        </tr>
+                        <tr id="${partida.id_partida}" hidden>
+                            <td colSpan="4">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>No hay registros para mostrar</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>`;
                     }
                     

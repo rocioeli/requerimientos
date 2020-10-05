@@ -8,8 +8,7 @@
                 <h3 class="modal-title" id="presupuestosModalLabel">Lista de Presupuestos</h3>
             </div>
             <div class="modal-body">
-                <table id="listaPresupuestos" class="table table-sm table-hover table-bordered dt-responsive nowrap" style="width:100%"
-                    data-order='[[ 0, "asc" ]]' data-page-length='10'>
+                <table id="listaPresupuestos" class="table table-sm table-hover table-bordered dt-responsive nowrap" style="width:100%">
                     <thead>
                         <tr style="background: gainsboro;">
                             <th scope="col">Código</th>

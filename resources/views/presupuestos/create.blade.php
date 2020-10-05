@@ -128,6 +128,7 @@
     <script src="{{('/js/presupuestos/presupuesto.js')}}"></script>
     <script src="{{('/js/presupuestos/titulo.js')}}"></script>
     <script src="{{('/js/presupuestos/partida.js')}}"></script>
+    <script src="{{('/js/presupuestos/detalle.js')}}"></script>
     <script>
         $(document).ready(function () {
             seleccionarMenu(window.location);

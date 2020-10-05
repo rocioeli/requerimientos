@@ -20,8 +20,4 @@ class CentroCosto extends Model
         "estado"
     ];
 
-    public function padre()
-    {
-        return $this->belongsTo(CentroCosto::class, 'id_padre');
-    }
 }

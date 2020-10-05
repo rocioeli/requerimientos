@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Presupuestos\Presupuesto;
 use App\Models\Presupuestos\Grupo;
 use App\Models\Presupuestos\Moneda;
@@ -40,6 +41,18 @@ class PresupuestoController extends Controller
         $presup->partidas;
 
         return response()->json($presup);
+    }
+
+    public function mostrarRequerimientosDetalle($id)
+    {
+        $detalle = DB::table('almacen.alm_det_req')
+                    ->select('alm_det_req.*','alm_req.codigo','alm_req.concepto','alm_req.fecha_requerimiento')
+                    ->join('almacen.alm_req','alm_req.id_requerimiento','=','alm_det_req.id_requerimiento')
+                    ->where([['alm_det_req.partida','=',$id],
+                             ['alm_det_req.estado','=',1]])
+                    ->get();
+
+        return response()->json($detalle);
     }
 
     public function store()
