@@ -61,7 +61,11 @@ function guardar_cc(data, url){
             $('[name=codigo]').val('');
             $('[name=descripcion]').val('');
             
-            alert('Se guardó exitosamente.');
+            if (url == 'guardar-centro-costo'){
+                alert('Se guardó exitosamente.');
+            } else {
+                alert('Se actualizó exitosamente.');
+            }
             $('#submit-cc').removeAttr('disabled');
             mostrarCentroCostos();
         }

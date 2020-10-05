@@ -43,13 +43,13 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <h5>Código</h5>
-                                <input type="text" name="codigo" class="form-control">
+                                <input type="text" name="codigo" class="form-control" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <h5>Descripción</h5>
-                                <input type="text" name="descripcion" class="form-control">
+                                <input type="text" name="descripcion" class="form-control" required>
                             </div>
                         </div>
                         <div class="row">
